@@ -33,18 +33,38 @@
 
    p {
      color: #666;
-     margin-bottom: 30px;
+     margin-bottom: 25px;
    }
 
-   .boton {
-     display: block;
+   input {
+     width: 100%;
+     box-sizing: border-box;
+     padding: 14px;
+     margin-bottom: 15px;
+     border: 1px solid #ccc;
+     border-radius: 8px;
+     font-size: 17px;
+   }
+
+   button {
+     width: 100%;
      background: #1f7a3a;
      color: white;
-     text-decoration: none;
+     border: none;
      padding: 15px;
      border-radius: 8px;
      font-size: 18px;
      font-weight: bold;
+     cursor: pointer;
+   }
+
+   .oculto {
+     display: none;
+   }
+
+   .volver {
+     margin-top: 15px;
+     background: #777;
    }
  </style>
 </head>
@@ -52,12 +72,60 @@
 <body>
 
  <div class="contenedor">
-   <h1>Gutiérrez Blanco</h1>
 
-   <p>Gestión de trabajadores y jornadas</p>
+   <div id="inicio">
+     <h1>Gutiérrez Blanco</h1>
+     <p>Gestión de trabajadores y jornadas</p>
 
-   <a class="boton" href="#">Iniciar sesión</a>
+     <button onclick="mostrarLogin()">
+       Iniciar sesión
+     </button>
+   </div>
+
+   <div id="login" class="oculto">
+     <h1>Iniciar sesión</h1>
+
+     <p>Introduce tus datos</p>
+
+     <input
+       type="tel"
+       id="telefono"
+       placeholder="Teléfono"
+
+
+     <input
+       type="password"
+       id="pin"
+       placeholder="PIN"
+       inputmode="numeric"
+
+
+     <button onclick="entrar()">
+       Entrar
+     </button>
+
+     <button class="volver" onclick="volver()">
+       Volver
+     </button>
+   </div>
+
  </div>
+
+ <script>
+   function mostrarLogin() {
+     document.getElementById("inicio").classList.add("oculto");
+     document.getElementById("login").classList.remove("oculto");
+   }
+
+   function volver() {
+     document.getElementById("login").classList.add("oculto");
+     document.getElementById("inicio").classList.remove("oculto");
+   }
+
+   function entrar() {
+     alert("El acceso se conectará con la base de datos en el siguiente paso.");
+   }
+ </script>
 
 </body>
 </html>
