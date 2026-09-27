@@ -3,128 +3,399 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
  <title>Gutiérrez Blanco</title>
 
  <style>
+   * {
+     box-sizing: border-box;
+   }
+
    body {
      margin: 0;
      font-family: Arial, sans-serif;
-     background: #f4f4f4;
+     background: #f2f4f3;
+     color: #222;
+   }
+
+   .pantalla {
+     min-height: 100vh;
      display: flex;
      justify-content: center;
      align-items: center;
-     min-height: 100vh;
+     padding: 20px;
    }
 
-   .contenedor {
-     background: white;
-     width: 90%;
-     max-width: 420px;
-     padding: 40px 25px;
-     text-align: center;
-     border-radius: 15px;
-     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-   }
-
-   h1 {
-     margin-bottom: 10px;
-     font-size: 34px;
-   }
-
-   p {
-     color: #666;
-     margin-bottom: 25px;
-   }
-
-   input {
+   .tarjeta {
      width: 100%;
-     box-sizing: border-box;
-     padding: 14px;
-     margin-bottom: 15px;
+     max-width: 430px;
+     background: white;
+     padding: 30px 24px;
+     border-radius: 18px;
+     box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+   }
+
+   .logo {
+     text-align: center;
+     font-size: 32px;
+     font-weight: bold;
+     margin-bottom: 8px;
+   }
+
+   .subtitulo {
+     text-align: center;
+     color: #666;
+     margin-bottom: 30px;
+   }
+
+   label {
+     display: block;
+     font-weight: bold;
+     margin-bottom: 7px;
+   }
+
+   input,
+   select {
+     width: 100%;
+     padding: 15px;
      border: 1px solid #ccc;
-     border-radius: 8px;
+     border-radius: 9px;
      font-size: 17px;
+     margin-bottom: 18px;
+     background: white;
    }
 
    button {
      width: 100%;
-     background: #1f7a3a;
-     color: white;
      border: none;
+     border-radius: 9px;
      padding: 15px;
-     border-radius: 8px;
-     font-size: 18px;
+     font-size: 17px;
      font-weight: bold;
      cursor: pointer;
+     background: #1f7a3a;
+     color: white;
+     margin-top: 5px;
+   }
+
+   button.secundario {
+     background: #777;
+     margin-top: 12px;
+   }
+
+   button:active {
+     opacity: 0.85;
    }
 
    .oculto {
      display: none;
    }
 
-   .volver {
-     margin-top: 15px;
-     background: #777;
+   .error {
+     background: #ffe5e5;
+     color: #a00000;
+     padding: 12px;
+     border-radius: 8px;
+     margin-bottom: 15px;
+     text-align: center;
+     display: none;
+   }
+
+   .cabecera {
+     text-align: center;
+     margin-bottom: 25px;
+   }
+
+   .cabecera h2 {
+     margin: 0 0 8px;
+   }
+
+   .rol {
+     color: #1f7a3a;
+     font-weight: bold;
+   }
+
+   .menu {
+     display: grid;
+     gap: 12px;
+   }
+
+   .opcion {
+     padding: 18px;
+     background: #f4f6f5;
+     border-radius: 10px;
+     font-size: 17px;
+     font-weight: bold;
+   }
+
+   .info {
+     text-align: center;
+     color: #666;
+     margin-top: 20px;
+     font-size: 14px;
    }
  </style>
 </head>
 
 <body>
 
- <div class="contenedor">
+ <!-- LOGIN -->
+ <div id="pantallaLogin" class="pantalla">
 
-   <div id="inicio">
-     <h1>Gutiérrez Blanco</h1>
-     <p>Gestión de trabajadores y jornadas</p>
+   <div class="tarjeta">
 
-     <button onclick="mostrarLogin()">
-       Iniciar sesión
-     </button>
-   </div>
+     <div class="logo">
+       Gutiérrez Blanco
+     </div>
 
-   <div id="login" class="oculto">
-     <h1>Iniciar sesión</h1>
+     <div class="subtitulo">
+       Gestión de trabajadores y jornadas
+     </div>
 
-     <p>Introduce tus datos</p>
+     <div id="mensajeError" class="error">
+       Completa todos los campos.
+     </div>
+
+     <label for="telefono">
+       Teléfono
+     </label>
 
      <input
-       type="tel"
        id="telefono"
-       placeholder="Teléfono"
+       type="tel"
+       inputmode="tel"
+       placeholder="Introduce tu teléfono"
 
+
+     <label for="pin">
+       PIN
+     </label>
 
      <input
-       type="password"
        id="pin"
-       placeholder="PIN"
+       type="password"
        inputmode="numeric"
+       placeholder="Introduce tu PIN"
+       maxlength="10"
 
 
-     <button onclick="entrar()">
+     <label for="rol">
+       Tipo de usuario
+     </label>
+
+     <select id="rol">
+       <option value="">Seleccionar</option>
+       <option value="jefe">Jefe</option>
+       <option value="encargado">Encargado</option>
+       <option value="trabajador">Trabajador</option>
+     </select>
+
+     <button onclick="iniciarSesion()">
        Entrar
      </button>
 
-     <button class="volver" onclick="volver()">
-       Volver
-     </button>
+     <div class="info">
+       Gutiérrez Blanco
+     </div>
+
    </div>
 
  </div>
 
+
+ <!-- PANEL JEFE -->
+ <div id="pantallaJefe" class="pantalla oculto">
+
+   <div class="tarjeta">
+
+     <div class="cabecera">
+       <h2>Gutiérrez Blanco</h2>
+       <div class="rol">Jefe</div>
+     </div>
+
+     <div class="menu">
+
+       <div class="opcion">
+         👷 Trabajadores
+       </div>
+
+       <div class="opcion">
+         👔 Encargados
+       </div>
+
+       <div class="opcion">
+         🕐 Fichajes
+       </div>
+
+       <div class="opcion">
+         🌱 Fincas
+       </div>
+
+       <div class="opcion">
+         📊 Horas trabajadas
+       </div>
+
+       <div class="opcion">
+         📋 Historial de cambios
+       </div>
+
+     </div>
+
+     <button class="secundario" onclick="cerrarSesion()">
+       Cerrar sesión
+     </button>
+
+   </div>
+
+ </div>
+
+
+ <!-- PANEL ENCARGADO -->
+ <div id="pantallaEncargado" class="pantalla oculto">
+
+   <div class="tarjeta">
+
+     <div class="cabecera">
+       <h2>Gutiérrez Blanco</h2>
+       <div class="rol">Encargado</div>
+     </div>
+
+     <div class="menu">
+
+       <div class="opcion">
+         👷 Mis trabajadores
+       </div>
+
+       <div class="opcion">
+         🕐 Fichajes
+       </div>
+
+       <div class="opcion">
+         📊 Horas trabajadas
+       </div>
+
+       <div class="opcion">
+         🌱 Fincas
+       </div>
+
+     </div>
+
+     <button class="secundario" onclick="cerrarSesion()">
+       Cerrar sesión
+     </button>
+
+   </div>
+
+ </div>
+
+
+ <!-- PANEL TRABAJADOR -->
+ <div id="pantallaTrabajador" class="pantalla oculto">
+
+   <div class="tarjeta">
+
+     <div class="cabecera">
+       <h2>Gutiérrez Blanco</h2>
+       <div class="rol">Trabajador</div>
+     </div>
+
+     <div class="menu">
+
+       <div class="opcion">
+         🌱 Seleccionar finca
+       </div>
+
+       <div class="opcion">
+         📍 Comprobar ubicación
+       </div>
+
+       <div class="opcion">
+         🟢 Entrada
+       </div>
+
+       <div class="opcion">
+         🔴 Salida
+       </div>
+
+       <div class="opcion">
+         🕐 Mis fichajes
+       </div>
+
+     </div>
+
+     <button class="secundario" onclick="cerrarSesion()">
+       Cerrar sesión
+     </button>
+
+   </div>
+
+ </div>
+
+
  <script>
-   function mostrarLogin() {
-     document.getElementById("inicio").classList.add("oculto");
-     document.getElementById("login").classList.remove("oculto");
+
+   function iniciarSesion() {
+
+     const telefono =
+       document.getElementById("telefono").value.trim();
+
+     const pin =
+       document.getElementById("pin").value.trim();
+
+     const rol =
+       document.getElementById("rol").value;
+
+     const error =
+       document.getElementById("mensajeError");
+
+     if (telefono === "" || pin === "" || rol === "") {
+       error.style.display = "block";
+       error.textContent =
+         "Introduce teléfono, PIN y tipo de usuario.";
+       return;
+     }
+
+     error.style.display = "none";
+
+     document.getElementById("pantallaLogin")
+       .classList.add("oculto");
+
+     if (rol === "jefe") {
+       document.getElementById("pantallaJefe")
+         .classList.remove("oculto");
+     }
+
+     if (rol === "encargado") {
+       document.getElementById("pantallaEncargado")
+         .classList.remove("oculto");
+     }
+
+     if (rol === "trabajador") {
+       document.getElementById("pantallaTrabajador")
+         .classList.remove("oculto");
+     }
    }
 
-   function volver() {
-     document.getElementById("login").classList.add("oculto");
-     document.getElementById("inicio").classList.remove("oculto");
+
+   function cerrarSesion() {
+
+     document.getElementById("pantallaJefe")
+       .classList.add("oculto");
+
+     document.getElementById("pantallaEncargado")
+       .classList.add("oculto");
+
+     document.getElementById("pantallaTrabajador")
+       .classList.add("oculto");
+
+     document.getElementById("pantallaLogin")
+       .classList.remove("oculto");
+
+     document.getElementById("telefono").value = "";
+     document.getElementById("pin").value = "";
+     document.getElementById("rol").value = "";
    }
 
-   function entrar() {
-     alert("El acceso se conectará con la base de datos en el siguiente paso.");
-   }
  </script>
 
 </body>
